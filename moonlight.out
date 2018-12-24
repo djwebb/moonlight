@@ -1,0 +1,126 @@
+
+
+
+
+
+ Program- moon               Calculation of the relative amount of illumination each hour                   page-    1
+ Run on-DD/MM/YY                                on specified nights
+
+ Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
+                     moonlight illuminance at the Earth's surface. J. Appl. Ecol., 13(3), 741-748.
+
+ Latitude -    31 Degrees  58 Minutes  South
+ Longitude -  115 Degrees  51 Minutes  East
+ Number of hours that local time is in advance of Greenwich-   8.0000 Hours.
+
+
+    D a t e    Local     Angle in         Angle in          Elongation     Distance to      percentage of illuminance
+               time      degrees from     degrees from      in degrees     moon in units    at full moon at zenith at
+               in 24     the Sun to       the Moon to         (el)         of 1/(mean       distance equal to mean
+               hour      the horizon.     the horizon.                     equatorial       equatorial parallax.
+               clock.        (as)             (am)                         parallax)
+                                                                              (rm)
+
+  26-  9- 1977 1800        2.3642           8.3073           168.70        0.99892          * 
+               1900       -10.314           20.406           169.21        0.99852          * 
+               2000       -22.725           32.089           169.71        0.99812           37.998
+               2100       -34.500           42.876           170.22        0.99772           53.666
+               2200       -44.995           51.864           170.72        0.99732           65.556
+               2300       -53.001           57.431           171.23        0.99692           72.011
+               2400       -56.609           57.704           171.73        0.99652           72.904
+  27-  9- 1977  100       -54.432           52.557           172.23        0.99612           68.116
+                200       -47.357           43.779           172.73        0.99571           57.307
+                300       -37.352           33.057           173.23        0.99531           41.864
+                400       -25.822           21.348           173.73        0.99491           23.005
+                500       -13.524           9.1500           174.22        0.99450            5.534
+                600      -0.87420          -3.2411           174.72        0.99410          *$
+
+     $ Moon below horizon    * Sun less than 12 degrees below horizon
+
+  27-  9- 1977 1800        2.4982          -3.5474           178.68        0.98920          *$
+               1900       -10.174           8.6291           178.33        0.98879          * 
+               2000       -22.566           20.517           177.91        0.98839           23.341
+               2100       -34.306           31.772           177.47        0.98798           43.141
+               2200       -44.748           41.825           177.01        0.98757           59.249
+               2300       -52.680           49.674           176.53        0.98716           70.310
+               2400       -56.224           53.793           176.06        0.98675           75.130
+  28-  9- 1977  100       -54.036           52.888           175.58        0.98634           73.541
+                200       -46.992           47.276           175.10        0.98593           65.607
+                300       -37.023           38.487           174.61        0.98552           52.310
+                400       -25.520           27.885           174.13        0.98512           34.737
+                500       -13.238           16.290           173.64        0.98471           15.327
+                600      -0.59589           4.1671           173.15        0.98430          * 
+
+     $ Moon below horizon    * Sun less than 12 degrees below horizon
+
+  28-  9- 1977 1800        2.6327          -15.146           167.31        0.97945          *$
+               1900       -10.032          -2.9193           166.82        0.97905          *$
+               2000       -22.405           9.1155           166.34        0.97866            4.995
+               2100       -34.111           20.689           165.85        0.97826           19.937
+               2200       -44.498           31.410           165.37        0.97786           35.754
+               2300       -52.358           40.629           164.88        0.97747           48.276
+               2400       -55.839           47.303           164.40        0.97707           56.093
+  29-  9- 1977  100       -53.641           50.093           163.92        0.97668           58.979
+                200       -46.627           48.200           163.43        0.97629           56.281
+                300       -36.694           42.179           162.95        0.97590           48.640
+                400       -25.219           33.346           162.47        0.97551           36.706
+                500       -12.953           22.827           161.99        0.97512           21.713
+                600      -0.31849           11.333           161.50        0.97474          * 
+
+
+
+
+
+ Program- moon               Calculation of the relative amount of illumination each hour                   page-    2
+ Run on-DD/MM/YY                                on specified nights
+
+ Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
+                     moonlight illuminance at the Earth's surface. J. Appl. Ecol., 13(3), 741-748.
+
+ Latitude -    31 Degrees  58 Minutes  South
+ Longitude -  115 Degrees  51 Minutes  East
+ Number of hours that local time is in advance of Greenwich-   8.0000 Hours.
+
+
+    D a t e    Local     Angle in         Angle in          Elongation     Distance to      percentage of illuminance
+               time      degrees from     degrees from      in degrees     moon in units    at full moon at zenith at
+               in 24     the Sun to       the Moon to         (el)         of 1/(mean       distance equal to mean
+               hour      the horizon.     the horizon.                     equatorial       equatorial parallax.
+               clock.        (as)             (am)                         parallax)
+                                                                              (rm)
+
+
+     $ Moon below horizon    * Sun less than 12 degrees below horizon
+
+  29-  9- 1977 1800        2.7678          -26.457           155.76        0.97022          *$
+               1900       -9.8899          -14.207           155.28        0.96985          *$
+               2000       -22.243          -2.0615           154.80        0.96949          $ 
+               2100       -33.914           9.7503           154.33        0.96913            4.586
+               2200       -44.246           20.937           153.85        0.96877           16.524
+               2300       -52.034           31.057           153.38        0.96841           28.628
+               2400       -55.454           39.406           152.90        0.96806           37.865
+  30-  9- 1977  100       -53.246           44.949           152.43        0.96771           43.148
+                200       -46.262           46.572           151.95        0.96736           44.344
+                300       -36.366           43.854           151.48        0.96701           41.285
+                400       -24.917           37.469           151.01        0.96666           34.344
+                500       -12.669           28.565           150.53        0.96632           24.247
+                600      -0.42147E-01       18.095           150.06        0.96598          * 
+
+     $ Moon below horizon    * Sun less than 12 degrees below horizon
+
+  30-  9- 1977 1800        2.9035          -37.456           144.42        0.96208          *$
+               1900       -9.7465          -25.218           143.95        0.96177          *$
+               2000       -22.079          -12.990           143.49        0.96147          $ 
+               2100       -33.714         -0.99072           143.02        0.96117          $ 
+               2200       -43.992           10.549           142.55        0.96087            4.092
+               2300       -51.709           21.314           142.09        0.96057           13.147
+               2400       -55.069           30.817           141.62        0.96028           21.870
+   1- 10- 1977  100       -52.852           38.317           141.16        0.95999           28.174
+                200       -45.898           42.821           140.69        0.95971           31.475
+                300       -36.038           43.438           140.23        0.95942           31.554
+                400       -24.617           40.020           139.76        0.95914           28.673
+                500       -12.386           33.300           139.30        0.95887           22.839
+                600       0.23302           24.297           138.83        0.95859          * 
+
+     $ Moon below horizon    * Sun less than 12 degrees below horizon
+
