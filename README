@@ -1,16 +1,22 @@
 Program moonlight
 =================
 
-Current version 2.0
+Current version 2.1
 
-This is the 1999 version of the Austin et al. moonlight programme:
+This is the 2018 version of the Austin et al. moonlight programme:
 
 c ***  Reference:
 c ***   Austin, R.H., Phillips, B.F. and Webb, D.J. (1976)  A method
 c ***       for calculation moonlight illuminance at the Earth's
 c ***       surface.  J. Appl. Ecol., 13(3), 741-748.
 
-The original code was written for an early version of Fortran.  In version 2.0 it has been updated to Fortran 90.  The code has been tested using the GNU gfortran compiler on a linux computer but should compile successfully with other modern fortran compilers on other operating systems.
+The original code was written for an early version of Fortran.  In version 2.0 (1999) it was been updated to Fortran 90.  In version 2.1:
+  1.  The code has been rewritten to accept dates outside the range 1900-1999.
+  2.  The inputfile can be specified on the command line.  For example:
+       ./moonlight PhillipIsland.dat
+  3.  Although the code was developed for the period 1990-1999, tests in 2018 indicate that the positions of the Sun and Moon are still correct to within a degree.
+
+The code has been tested using the GNU gfortran compiler on a linux computer but should compile successfully with other modern fortran compilers on other operating systems.
 
 Compilation
 ===========
@@ -32,7 +38,7 @@ Production
 
 For production runs you need to generate your own input file and either give it the name 'input.dat', after deleting the original, or give it a new name, replace 'input.dat' in line 132 of the main program by the new name and then recompile the program before running it.
 
-Use outside the period 1900 to 1999
-===================================
+Plans
+=====
 
-The original program only allocates two characters for the year specification in the input file - on the assumption that all years are for the period 1900 to 1999.  The program can be modified to work outside these dates but users are advised instead to use one of the later versions of this progam in which this limitation will have been removed.
+As stated above the predicted positions of the sun and moon are still correct within a degree.  A stringent test of the program over a longer period of time is planned for 2019.

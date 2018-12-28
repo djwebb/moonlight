@@ -1,9 +1,10 @@
+  Using input file = PhillipIsland.dat
 
 
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-    1
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-    1
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -67,7 +68,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-    2
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-    2
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -131,7 +132,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-    3
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-    3
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -195,7 +196,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-    4
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-    4
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -259,7 +260,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-    5
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-    5
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -323,7 +324,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-    6
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-    6
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -387,7 +388,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-    7
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-    7
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -451,7 +452,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-    8
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-    8
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -515,7 +516,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-    9
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-    9
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -579,7 +580,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-   10
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-   10
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -643,7 +644,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-   11
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-   11
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -707,7 +708,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-   12
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-   12
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -771,7 +772,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-   13
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-   13
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -835,7 +836,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-   14
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-   14
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -899,7 +900,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-   15
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-   15
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -963,7 +964,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-   16
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-   16
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -1027,7 +1028,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-   17
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-   17
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -1091,7 +1092,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-   18
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-   18
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -1155,7 +1156,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-   19
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-   19
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -1219,7 +1220,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-   20
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-   20
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -1283,7 +1284,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-   21
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-   21
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -1347,7 +1348,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-   22
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-   22
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -1411,7 +1412,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-   23
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-   23
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -1442,7 +1443,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-   24
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-   24
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -1506,7 +1507,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-   25
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-   25
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -1570,7 +1571,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-   26
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-   26
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -1634,7 +1635,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-   27
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-   27
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -1698,7 +1699,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-   28
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-   28
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -1762,7 +1763,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-   29
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-   29
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -1826,7 +1827,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-   30
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-   30
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -1890,7 +1891,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-   31
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-   31
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -1954,7 +1955,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-   32
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-   32
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -2018,7 +2019,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-   33
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-   33
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -2082,7 +2083,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-   34
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-   34
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -2146,7 +2147,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-   35
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-   35
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -2210,7 +2211,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-   36
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-   36
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -2274,7 +2275,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-   37
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-   37
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -2338,7 +2339,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-   38
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-   38
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -2402,7 +2403,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-   39
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-   39
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -2466,7 +2467,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-   40
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-   40
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -2530,7 +2531,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-   41
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-   41
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -2594,7 +2595,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-   42
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-   42
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -2658,7 +2659,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-   43
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-   43
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -2722,7 +2723,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-   44
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-   44
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -2786,7 +2787,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-   45
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-   45
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating
@@ -2850,7 +2851,7 @@
 
 
 
- Program- moon               Calculation of the relative amount of illumination each hour                   page-   46
+ Program- moonlight          Calculation of the relative amount of illumination each hour                   page-   46
  Run on-DD/MM/YY                                on specified nights
 
  Reference-          Austin, R.H., Phillips, B.F., and Webb, D.J. (1976) A method for calculating

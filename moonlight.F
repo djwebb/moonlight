@@ -5,8 +5,8 @@ c ***
 c *** Program to calculate the relative amount of illumination at each
 c *** hour on specified nights at a given location.
 c ***
-c ***  Version 2.0.0   (April 1999)
-c ***  For unix systems running Fortran 77 (or Fortran 90).
+c ***  Version 2.1   (January 2019)
+c ***  For unix systems running Fortran 90.
 c ***
 c ***  Reference:
 c ***   Austin, R.H., Phillips, B.F. and Webb, D.J. (1976)  A method
@@ -34,16 +34,16 @@ c ***            the right of column 29.  Otherwise punch left
 c ***            justified with decimal point.
 c ***   31-35    Number of days for which the user requires the
 c ***            calculation to be performed.
-c ***   37-42    Date (DDMMYY) of first day of period for which
+c ***   37-44    Date (DDMMYYYY) of first day of period for which
 c ***            calculation is to be performed
-c ***   44-47    Time (HHMM) of day of the first instance for
+c ***   46-49    Time (HHMM) of day of the first instance for
 c ***            which the illumination is to be calculated.
-c ***   49-52    Time (HHMM) of day of the last instance for
+c ***   51-54    Time (HHMM) of day of the last instance for
 c ***            which the illumination is to be calculated.
 c ***            If the period between the first and second
 c ***            times includes midnight, add 2400 to the time
 c ***            (i.e. use 3000 for 6 am the following day).
-c ***   54-57    Time period (HHMM) between calculations.
+c ***   56-59    Time period (HHMM) between calculations.
 c ***            (Thus 0130 calculates every 1 hour and 30
 c ***            minutes).
 c ***
@@ -57,8 +57,8 @@ c ***    from 26/09/77 to 05/10/77 at Perth, Western Australia
 c ***    (Latitude 31 degrees, 58 minutes south, longitude 115 degrees
 c ***    51 minutes east).  Local time is 8 hours ahead of Greenwich
 c ***    mean time.  The control cards are therefore:
-c *** Column 12345678901234567890123456789012345678901234567890123456712
-c ***        31 58 S   115 51 E  +8.0         10 260977 1800 3000 0100
+c *** Column 12345678901234567890123456789012345678901234567890123456789
+c ***        31 58 S   115 51 E  +8.0         10 26091977 1800 3000 0100
 c ***        Blank line
 c ***
 c *** The authors woul;d appreciate being informed of any errors
@@ -68,7 +68,7 @@ c ***          CSIRO, P.O. Box 20, North Beach, Western Australia 6020
 c ***          Australia.
 c ***
 c ***          Dr D.J. Webb
-c ***          Southampton Oceanography Centre, Southampton SO14 3ZH,
+c ***          National Oceanography Centre, Southampton SO14 3ZH,
 c ***          United Kingdom.
 c ***
 c *** Notes on the conversion of this program to other computer systems
@@ -96,7 +96,7 @@ c ***
 c ***
 c ***  Changes and corrections
 c ***
-c ***  A number of minor alterations have been amde to this programme
+c ***  A number of minor alterations have been made to this programme
 c ***  since its inception, in order to tidy up the code and to extend
 c ***  its versitility.  The method presented by Austin et al. (1976)
 c ***  has not been modified, however the original programme contained
@@ -116,28 +116,50 @@ c ***     Station, Tehkummah, Ontario, Canada.  It exaggerated the effect
 c ***     of the angular distance of the moon above the horizon.
 c ***                                                         (17/8/78)
 c ***
-c ***  2.  The code has been modified to work with Fortran 77 running
-c ***      on a Sun4 Unix workstation.                   (D.Webb, 1999)
+c ***  2.  The code has been modified to work with Fortran 90 running
+c ***      on a Linux workstation.
+c ***
+c ***  Version 2.1
+c ***
+c ***  3.  Dates outside the range 1900-2000 can be used.
+c ***
+c ***  4.  The name of the data file can be provided on the command line.
+c ***      For example:
+c ***      ./moonlight PhillipIsland.dat
 c ***
 c
+
       character*1 latdrn,lngdrn,isnmn*2
       common latdeg,latmin,lngdeg,lngmin,timcor,lincnt,latdrn,lngdrn
       real*8 long
       character*4 cj
+      integer ::  narg
+      character(len=256) :: input_string, input_file
 c
       pi = 4d0*atan(1d0)
+!
+!  Look for input file on command line
+!
+       narg = command_argument_count()
+       if(narg.eq.0)then
+         input_file = "input.dat"
+       else
+         call get_command_argument(1,input_string)
+         input_file = adjustl(input_string)
+         print *," Using input file = ",trim(input_file)
+       endif
 c
 c  choose a new date
 c
-      open(5,file='input.dat')
+      open(5,file=trim(input_file))
    5  read(5,60,end=300)latdeg,latmin,latdrn,lngdeg,lngmin,lngdrn,
      &              timcor,ndays,iday,imth,iyr,ihr,imn,jhr,jmn,khr,kmn
       if(ndays.eq.0)goto 300
-  60  format(i2,1x,i2,1x,a1,3x,i3,1x,i2,1x,a1,2x,f9.0,1x,i5,1x,3i2,1x,
-     &       2i2,1x,2i2,1x,2i2)
+  60  format(i2,1x,i2,1x,a1,3x,i3,1x,i2,1x,a1,2x,f9.0,1x,i5,1x,2i2,i4,
+     &       1x,2i2,1x,2i2,1x,2i2)
 c
       lincnt = 100
-      iyr = 1900+iyr
+!     iyr = 1900+iyr
 c
 c carry out checks
 c
@@ -378,12 +400,6 @@ c  waning moon
       return
       end
 
-
-
-
-
-
-
       subroutine moonp(as,am,el,rm,hour,iday,month,iyear,plsgmt,
      &                 pole, rlon)
       implicit real*8(a-h,o-z)
@@ -623,12 +639,24 @@ c
       endif
 c
       nyear = iyear-1900
-      nleap = nyear/4
-      if(4*nleap.eq.nyear.and.month.le.2.and.nyear.ne.0)nleap=nleap-1
+!      nleap = nyear/4
+!      if(4*nleap.eq.nyear.and.month.le.2.and.nyear.ne.0)nleap=nleap-1
+!      hrgmt = (nyear*365+nleap+mday(month)+iday-1)*24d0+hour-plsgmt
+!      centj = (hrgmt+12d0)/(36525d0*24d0)
+
+      call leapyear(iyear,ileap)
+      call leapyears(iyear,nleapp)
+      call leapyears(1900,n1900)
+      nleapp = nleapp-460
+!      print *,iyear,nyear,nleap,nleapp,ileap,n1900
+      nleap = nleapp
+      if(ileap.eq.1.and.month.gt.2)nleap = nleap + 1
+
       hrgmt = (nyear*365+nleap+mday(month)+iday-1)*24d0+hour-plsgmt
       centj = (hrgmt+12d0)/(36525d0*24d0)
+
       return
-      end
+      end subroutine skytime
 
       subroutine newpag
       implicit real*8(a-h,o-z)
@@ -668,7 +696,7 @@ c     call date(date)
       print 61
       print 6,lpage,date
   61  format(////)
-   6  format(' Program- moon',15x,'Calculation of the relative',
+   6  format(' Program- moonlight',10x,'Calculation of the relative',
      & ' amount of illumination each hour', 19x,'page-',i5,/,
      & ' Run on-',a8,32x,'on specified nights')
       print 7
@@ -759,6 +787,40 @@ c
       if(im.lt.12)return
       jm=1
       jy=iy+1
+      return
+      end
+
+      subroutine leapyear(iyear, ileap)
+      implicit none
+!
+!  Subroutine to flag leap years.
+!  If iyear is a leap year: ileap = 1
+!                     else: ileap = 0
+!
+      integer, intent(in)  :: iyear
+      integer, intent(out) :: ileap
+
+      if(modulo(iyear,4).ne.0)then
+        ileap = 0
+      elseif(modulo(iyear,400).eq.0)then
+        ileap = 1
+      elseif(modulo(iyear,100).eq.0)then
+        ileap = 0
+      else
+        ileap = 1
+      endif
+      return
+      end subroutine leapyear
+
+      subroutine leapyears(iyear, nleap)
+      implicit none
+!
+!  Subroutine returns nleap the number of leapyears prior to
+!  year iyear since year 1.
+!
+      integer, intent(in)  :: iyear
+      integer, intent(out) :: nleap
+      nleap = (iyear-1)/4 -(iyear-1)/100+(iyear-1)/400
       return
       end
 
