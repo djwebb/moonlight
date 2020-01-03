@@ -54,14 +54,3 @@ The comparison was carried out allowing for a linear change with time in the Rig
 In a second check,  the angle between the sun and moon was calculated using the two systems.  The difference bewteen the two values showed errors generally less than 0.20 degrees between 2000 and 2020, increasing slightly later in the century.  The standard deviation each year increased from around 0.095 degrees early in the century to 0.1 degrees closer to 2100.
 
 In conclusion, although these errors might be significant when planning interplanetary travel, for the purposes of understanding the effect of moonlight on biological systems the program should still be useful to 2100 and beyond.
-
-
-
-
-
-
-
-Plans
-=====
-
-As stated above the predicted positions of the sun and moon are still correct within a degree.  A stringent test of the program over a longer period of time is planned for 2019.
