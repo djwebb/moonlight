@@ -5,7 +5,7 @@ c ***
 c *** Program to calculate the relative amount of illumination at each
 c *** hour on specified nights at a given location.
 c ***
-c ***  Version 2.1   (January 2019)
+c ***  Version 2.2   (January 2020)
 c ***  For unix systems running Fortran 90.
 c ***
 c ***  Reference:
@@ -91,7 +91,7 @@ c *** 5.  Some subroutines are non-standard CDC library routines
 c ***     e.g. 'data' called by newpage returns an alphanumeric date
 c ***     in the format 10HBYY/MM/DDB, where B=Blank, YY=Year, MM=Month,
 c ***     DD=day.
-c ***     Also acos called by routines moonp and psunmo.
+c ***     Also acos called by routines esunmoon and psunmo.
 c ***
 c ***
 c ***  Changes and corrections
@@ -126,6 +126,11 @@ c ***
 c ***  4.  The name of the data file can be provided on the command line.
 c ***      For example:
 c ***      ./moonlight PhillipIsland.dat
+c ***
+c ***  Version 2.2
+c ***
+c ***  5.  File README gives further information on changes of accuracy
+c ***      with time.
 c ***
 c
 
@@ -232,10 +237,10 @@ c
       if(lmn.gt.jmn)goto 100
  201  hih = lhr+lmn/60d0
       if(hih.gt.24.)goto 206
-      call moonp(as,am,el,rm,hih,iday,imth,iyr,gmt,plat,long)
+      call esunmoon(as,am,el,rm,hih,iday,imth,iyr,gmt,plat,long)
       goto 207
  206  hih=hih-24d0
-      call moonp(as,am,el,rm,hih,iiday,iimth,iiyr,gmt,plat,long)
+      call esunmoon(as,am,el,rm,hih,iiday,iimth,iiyr,gmt,plat,long)
 c
  207  llhr = lhr*100d0+lmn
       if(lhr.gt.24)llhr = (lhr-24)*100+lmn
@@ -399,7 +404,7 @@ c  waning moon
       brt=brt*ami
       return
       end
-
+#if 0
       subroutine moonp(as,am,el,rm,hour,iday,month,iyear,plsgmt,
      &                 pole, rlon)
       implicit real*8(a-h,o-z)
@@ -604,8 +609,6 @@ c
 c
       end
 
-
-
       subroutine skytime(hour,iday,month,iyear,plsgmt,hrgmt,centj)
       implicit real*8(a-h,o-z)
 c
@@ -657,6 +660,7 @@ c
 
       return
       end subroutine skytime
+#endif
 
       subroutine newpag
       implicit real*8(a-h,o-z)
@@ -824,4 +828,4 @@ c
       return
       end
 
-
+      include "sunmoon.F"

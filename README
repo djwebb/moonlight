@@ -14,7 +14,7 @@ The original code was written for an early version of Fortran.  In version 2.0 (
   1.  The code has been rewritten to accept dates outside the range 1900-1999.
   2.  The inputfile can be specified on the command line.  For example:
        ./moonlight PhillipIsland.dat
-  3.  Although the code was developed for the period 1990-1999, tests in 2018 indicate that the positions of the Sun and Moon are still correct to within a degree.
+  3.  Although the code was developed for the period 1990-1999, tests in 2019 (discussed below) show that it should be able to predict the positions of the Sun and Moon with an error of less than 0.5 degrees well beyond the year 2100.
 
 The code has been tested using the GNU gfortran compiler on a linux computer but should compile successfully with other modern fortran compilers on other operating systems.
 
@@ -22,7 +22,7 @@ Compilation
 ===========
 
 On a simple text console, the program can be compiled using the command
-  gfortran -o moonlightt moonlightt.F
+  gfortran -o moonlight moonlight.F
 For other compilers 'gfortran' should be replaced by the appropiate compiler, for example 'ifort' for the intel fortran compiler
 
 Testing
@@ -37,6 +37,29 @@ Production
 ==========
 
 For production runs you need to generate your own input file and either give it the name 'input.dat', after deleting the original, or give it a new name, replace 'input.dat' in line 132 of the main program by the new name and then recompile the program before running it.
+
+Accuracy
+========
+
+The positions of the Sun and Moon are calculated by subroutine psunmo.  The formula used are those given by Cartwright in the Munk & Cartwright (1966) concerned with analysis of the tides at Honolulu and Newlyn (UK).  The formula are based on a perturbation expansion of the three body problem (Sun-Earth-Moon).  Most of the terms in the equations are constants which depend primarily on the relative masses of the three bodies and the angles between the Earth's equator, the ecliptic and the orbit of the Moon.
+
+However six of the parameters vary with time.  Three determe the apparent position of the Sun in the sky.  These are its mean longitude, the longitude of the Earth's perigree and the eccentricity of its orbit.   The other three determine the position of the Moon.  These, measured along the ecliptic, are its mean longitude, the longitude of its perigree and the longitude of the node.
+
+To a good approximation all six constants are linear functions of time.  However Cartwright also includes the small second order corrections.  The largest of these which affects the Moon's mean longitude introduces a difference of 2x10^-4 degrees after a century.  The higher order corrections will be similarly much smaller so the formula should be valid for many centuries.
+
+As a check the results, the values of right ascention and declination calculated by subroutine psunmo were compared with values obtained in late 2019 from the JPL Horizons system (https://ssd.jpl.nasa.gov/horizons.cgi).  The JPL calculation uses the modern International Celestial Reference Frame (ICRF) which is fixed to distant radio sources whereas the Cartwright angles are relative to the slowly moving "First Point of Ares".  The two systems appear to be similar around the year 2000 but later drift apart.
+
+The comparison was carried out allowing for a linear change with time in the Right Ascension values due to the movement of the First Point of Ares. Between the years 200 and 2010, errors in the Sun Position were negligable, the errors in both the Moon's Right Ascension and Declination being less than 0.2 degrees. Towards the end of the centrury the errors in the Declination of both the Moon and Sun increased to over 0.6 degrees, presumably due to differences in the two frames of reference.  The Moon's Right Asention value also increased to 0.2 degrees.
+
+In a second check,  the angle between the sun and moon was calculated using the two systems.  The difference bewteen the two values showed errors generally less than 0.20 degrees between 2000 and 2020, increasing slightly later in the century.  The standard deviation each year increased from around 0.095 degrees early in the century to 0.1 degrees closer to 2100.
+
+In conclusion, although these errors might be significant when planning interplanetary travel, for the purposes of understanding the effect of moonlight on biological systems the program should still be useful to 2100 and beyond.
+
+
+
+
+
+
 
 Plans
 =====
