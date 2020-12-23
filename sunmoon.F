@@ -1,50 +1,66 @@
 !
+!=======================================================================
+!23456789012345678901234567890123456789012345678901234567890123456789012
+!
 !  File sunmoon.F
 !
 !  This file contains the routines used to determine the position
 !  of the Sun and Moon.  These can be used independently of the
 !  program moonlight.F
+! ***
+! ***  Version 2.4   (December 2020)
+! ***  For unix systems running Fortran 90.
+! ***
+! ***  Copyright 1976, 2018, 2020 R.H. Austin, B.F. Phillips, D.J. Webb
+! ***  Released under licence GPL-3.0-or-later
+! ***
+! ***  Reference:
+! ***   Austin, R.H., Phillips, B.F. and Webb, D.J. (1976)  A method
+! ***       for calculation moonlight illuminance at the Earth's
+! ***       surface.  J. Appl. Ecol., 13(3), 741-748.
+! ***
+!=======================================================================
 !
       subroutine esunmoon(as,am,el,rm,hour,iday,month,iyear,plsgmt,
      &                 pole, rlon)
       implicit real*8(a-h,o-z)
-c
-c23456789012345678901234567890123456789012345678901234567890123456789012
-c***********************************************************************
-c
-c  subroutine to calculate elevation of the sun and moon above the horizon
-c
-c  Input:
-c
-c    hour   -  real*8  - hours since midnight
-c    iday   -  integer - day of month (1=1st)
-c    month  -  integer - number of month (1=January)
-c    iyear  -  integer - year i.e. 2002, in range 1900 to 2100
-c    plsgmt -  real*8  - time zone relative to Greenwich
-c    pole   -  real*8  - polar angle of the place of interest in degrees
-c                        (equals 90 - latitude north of equator)
-c    rlon   -  real*8  - longitude of place of interest in degrees
-c
-c  Output:
-c
-c    as     -  real*8  - angle in degrees of sun above the horizon
-c    am     -  real*8  - angle in degrees of moon above the horizon
-c    el     -  real*8  - elongation in degrees
-c    rm     -  real*8  - distance of the moon in units of 1/(mean
-c                                   equatorial parallax)
-c
-c***********************************************************************
-c
+!
+!=======================================================================
+!23456789012345678901234567890123456789012345678901234567890123456789012
+!
+!  subroutine to calculate elevation of the sun and moon above the horizon
+!
+!  Input:
+!
+!    hour   -  real*8  - hours since midnight
+!    iday   -  integer - day of month (1=1st)
+!    month  -  integer - number of month (1=January)
+!    iyear  -  integer - year i.e. 2002, in range 1900 to 2100
+!    plsgmt -  real*8  - time zone relative to Greenwich
+!    pole   -  real*8  - polar angle of the place of interest in degrees
+!                        (equals 90 - latitude north of equator)
+!    rlon   -  real*8  - longitude of place of interest in degrees
+!
+!  Output:
+!
+!    as     -  real*8  - angle in degrees of sun above the horizon
+!    am     -  real*8  - angle in degrees of moon above the horizon
+!    el     -  real*8  - elongation in degrees
+!    rm     -  real*8  - distance of the moon in units of 1/(mean
+!                                   equatorial parallax)
+!
+!=======================================================================
+!
       data pi/3.1415926532d0/
       data in /0/
       save in,pi,radian
-c
+!
       if(in.eq.0)then
         in = 1
         pi = 4d0*atan(1d0)
         radian = pi/180d0
       endif
-c
+!
       call skytime(hour,iday,month,iyear,plsgmt,hrgmt,centj)
       call psunmo(hrgmt,gra,ps,rlonsu,rs,pm,rlonmo,rm,t15)
       c1 = cos(pole*radian)
@@ -62,45 +78,45 @@ c
 
       subroutine psunmo(hrgmt,gra,ps,rlonsu,rs,pm,rlonmo,rm,t15)
       implicit real*16(a-h,o-z)
-c
-c23456789012345678901234567890123456789012345678901234567890123456789012
-c***********************************************************************
-c
-c  subroutine to calculate position of the moon and sun using
-c  astronomical constants for epoch 1900
-c
-c  Input:
-c
-c    hrgmt  -  real*8  - hours since 0000 1st January 1900
-c
-c  Output:
-c
-c    gra    -  real*8  - right ascension of greenwich
-c    ps     -  real*8  - polar angle of the sun
-c    rlonsu -  real*8  - longitude of sun east of Greenwich
-c    rs     -  real*8  - relative distance of the sun
-c    pm     -  real*8  - polar angle of the moon
-c    rlonmo -  real*8  - longitude of moon east of Greenwich
-c    rm     -  real*8  - distance of the moon in units of 1/(mean
-c                                   equatorial parallax)
-c
-c  Note:  1.  all angles in radians
-c         2.  All internal calculations use real*16 for accuracy
-c
-c***********************************************************************
-c
+!
+!=======================================================================
+!23456789012345678901234567890123456789012345678901234567890123456789012
+!
+!  subroutine to calculate position of the moon and sun using
+!  astronomical constants for epoch 1900
+!
+!  Input:
+!
+!    hrgmt  -  real*8  - hours since 0000 1st January 1900
+!
+!  Output:
+!
+!    gra    -  real*8  - right ascension of greenwich
+!    ps     -  real*8  - polar angle of the sun
+!    rlonsu -  real*8  - longitude of sun east of Greenwich
+!    rs     -  real*8  - relative distance of the sun
+!    pm     -  real*8  - polar angle of the moon
+!    rlonmo -  real*8  - longitude of moon east of Greenwich
+!    rm     -  real*8  - distance of the moon in units of 1/(mean
+!                                   equatorial parallax)
+!
+!  Note:  1.  all angles in radians
+!         2.  All internal calculations use real*16 for accuracy
+!
+!=======================================================================
+!
       real*8  hrgmt,gra,ps,rlonsu,rs,pm,rlonmo,rm,t15
       real*16 c(19),ls,lm,nm,t
       data in/0/
       save in,c1,c2,p5,pi,pi2,radian,degree,ws,wi,em,ratm,ratm2,em2,
      &     tval,c
-c
+!
       if (in.eq.0)goto 200
-c
+!
  100  t = (hrgmt+12d0)/(36525d0*24d0)
-c
-c  calculate sun's position
-c
+!
+!  calculate sun's position
+!
       hs = mod((52d-7*t+628.3319509d0)*t+4.8816280d0,pi2)
       ps = mod((79d-7*t+0.0300053d0  )*t+4.9082295d0,pi2)
       es = (-126e-9*t-418e-7)*t+0.01675104
@@ -109,7 +125,7 @@ c
       ls = (2.5d0*es*cos1+2.)*es*sin1+hs
       rs = ((2d0*cos1**2-1d0)*es+cos1)*es+1d0
       ps = acos(sin(ls)*c(18))
-c
+!
       tval = (-0.5d0*pi+ls+ps)*0.5d0
       fis = 2d0*atan(c(1)*sin(tval)/cos(tval))
       t15 = mod(15d0*pi*hrgmt/180d0,pi2)
@@ -118,24 +134,24 @@ c
       if(t15.lt.0d0)t15 = t15+pi2
       if(gra.lt.0d0)gra = gra+pi2
       if(rlonsu.lt.0d0)rlonsu=rlonsu+pi2
-c
-c      print 11,hrgmt,t
-c      print 12,hs*degree,ps*degree,es*degree
-c      print 12,cos1,sin1,c(18)
-c      print 12,es*degree,cos1,sin1,hs*degree
-c      print 12,ls*degree,ps*degree
-c      print 12,tval,fis,t15*degree
-c      print 12,gra*degree,rlonsu*degree
-c      print 12,90d0-ps*degree,rlonsu*degree
-c  11  format(3f12.4)
-c  12  format(4f12.6)
-c
-c calculate moon's position
-c
+!
+!      print 11,hrgmt,t
+!      print 12,hs*degree,ps*degree,es*degree
+!      print 12,cos1,sin1,c(18)
+!      print 12,es*degree,cos1,sin1,hs*degree
+!      print 12,ls*degree,ps*degree
+!      print 12,tval,fis,t15*degree
+!      print 12,gra*degree,rlonsu*degree
+!      print 12,90d0-ps*degree,rlonsu*degree
+!  11  format(3f12.4)
+!  12  format(4f12.6)
+!
+! calculate moon's position
+!
       hm = mod((346d-7*t+8399.7092745d0)*t+4.7200089d0,pi2)
       pm = mod((-1801d-7*t+71.0180412d0)*t+5.8351526d0,pi2)
       nm = mod((363d-7*t-33.7571463d0)*t+4.5236016d0,pi2)
-c
+!
       tval = 0.5*nm
       q1= sin(tval)/cos(tval)
       p = atan(c(2)*q1)
@@ -163,7 +179,7 @@ c
       rm = 1d0 + c(11)*(c(12)*cos2 +c(13)*cos4 +c(14)*cos6 +c(15)*cos5
      &                 +c(16)*cos7 +c(17)*cos8*es)
       pm = acos(sin(lm)*sin(wm))
-c
+!
       tval = (0.5d0*pi+wm)*0.5d0
       y = sin(tval)/cos(tval)
       tval = (-0.5d0*pi+lm+pm)*0.5d0
@@ -172,9 +188,9 @@ c
       rlonmo = mod(v+fim-gra,pi2)
       if(rlonmo.lt.0d0)rlonmo=rlonmo+pi2
       return
-c
-c set up constants
-c
+!
+! set up constants
+!
  200  in=1
       c1 = 1d0
       c2 = 2d0
@@ -211,36 +227,38 @@ c
       c(18) = sin(ws)
       c(19) = -3d0*ratm
       goto 100
-c
+!
       end
 
 
 
       subroutine skytime(hour,iday,month,iyear,plsgmt,hrgmt,centj)
       implicit real*8(a-h,o-z)
-c
-c23456789012345678901234567890123456789012345678901234567890123456789012
-c
-c  subroutine to calculate hrgmt the number of hours since 0000 on
-c  1 Jan 1900 and the number of Julian centuries since 1200 on
-c  31 Decemebr 1899.
-c
-c  Input:
-c
-c    hour   -  real*8  - hours since midnight
-c    iday   -  integer - day of month (1=1st)
-c    month  -  integer - number of month (1=January)
-c    iyear  -  integer - year in range 1900 to 2000
-c    plsgmt -  real*8  - time zone relative to Greenwich
-c
-c  Output
-c
-c    hrgmt  -  real*8 - hours since 0000 on 1st Jan 1900
-c    centj  -  real*8 - Julian centuries since 1200 31st Dec 1899
-c
+!
+!=======================================================================
+!23456789012345678901234567890123456789012345678901234567890123456789012
+!
+!  subroutine to calculate hrgmt the number of hours since 0000 on
+!  1 Jan 1900 and the number of Julian centuries since 1200 on
+!  31 Decemebr 1899.
+!
+!  Input:
+!
+!    hour   -  real*8  - hours since midnight
+!    iday   -  integer - day of month (1=1st)
+!    month  -  integer - number of month (1=January)
+!    iyear  -  integer - year in range 1900 to 2000
+!    plsgmt -  real*8  - time zone relative to Greenwich
+!
+!  Output
+!
+!    hrgmt  -  real*8 - hours since 0000 on 1st Jan 1900
+!    centj  -  real*8 - Julian centuries since 1200 31st Dec 1899
+!=======================================================================
+!
       dimension mday(12)
       data  mday /0,31,59,90,120,151,181,212,243,273,304,334/
-c
+!
       if(iyear.lt.1000.or.iyear.ge.3000)then
         print *,' The errors in the program moonlight'
         print *,' may start being significat outside'
@@ -248,7 +266,7 @@ c
         print *,' Programme stopping ...'
         stop
       endif
-c
+!
       nyear = iyear-1900
       nleap = nyear/4
       if(4*nleap.eq.nyear.and.month.le.2.and.nyear.ne.0)nleap=nleap-1

@@ -1,138 +1,144 @@
       program moonlight
       implicit real*8(a-h,o-z)
-c23456789012345678901234567890123456789012345678901234567890123456789012
-c ***
-c *** Program to calculate the relative amount of illumination at each
-c *** hour on specified nights at a given location.
-c ***
-c ***  Version 2.2   (January 2020)
-c ***  For unix systems running Fortran 90.
-c ***
-c ***  Reference:
-c ***   Austin, R.H., Phillips, B.F. and Webb, D.J. (1976)  A method
-c ***       for calculation moonlight illuminance at the Earth's
-c ***       surface.  J. Appl. Ecol., 13(3), 741-748.
-c ***
-c ***  Format for input file
-c ***
-c ***   Unless stated fields should be right justified and without
-c ***   a decimal point.  Dates and times should be zero filled
-c ***   (i.e. use zeros instead of blanks).
-c ***
-c ***   Column   Contents
-c ***   1-2      Latitude - degrees.
-c ***   4-5      Latitude - minutes.
-c ***   7        N or S for North or South latitude.
-c ***   11-13    Longitude - degrees.
-c ***   15-16    Longitude - minutes.
-c ***   18       E or W for East or West longitude
-c ***   21-29    Time correction.  The number of hours that the
-c ***            time is ahead of or behind greenwich mean time.
-c ***            Positive if ahead, negative if behind.  If no
-c ***            decimal point, decimal point assumed to lie to
-c ***            the right of column 29.  Otherwise punch left
-c ***            justified with decimal point.
-c ***   31-35    Number of days for which the user requires the
-c ***            calculation to be performed.
-c ***   37-44    Date (DDMMYYYY) of first day of period for which
-c ***            calculation is to be performed
-c ***   46-49    Time (HHMM) of day of the first instance for
-c ***            which the illumination is to be calculated.
-c ***   51-54    Time (HHMM) of day of the last instance for
-c ***            which the illumination is to be calculated.
-c ***            If the period between the first and second
-c ***            times includes midnight, add 2400 to the time
-c ***            (i.e. use 3000 for 6 am the following day).
-c ***   56-59    Time period (HHMM) between calculations.
-c ***            (Thus 0130 calculates every 1 hour and 30
-c ***            minutes).
-c ***
-c ***   An end-of-file or blank line ends the input data.
-c ***
-c ***  Example of the use of this program:
-c ***
-c ***    To obtain the relative amount of illuminance for 10 nights
-c ***    at each hour from 1800 hours to 0600 hours the following day
-c ***    from 26/09/77 to 05/10/77 at Perth, Western Australia
-c ***    (Latitude 31 degrees, 58 minutes south, longitude 115 degrees
-c ***    51 minutes east).  Local time is 8 hours ahead of Greenwich
-c ***    mean time.  The control cards are therefore:
-c *** Column 12345678901234567890123456789012345678901234567890123456789
-c ***        31 58 S   115 51 E  +8.0         10 26091977 1800 3000 0100
-c ***        Blank line
-c ***
-c *** The authors woul;d appreciate being informed of any errors
-c *** discovered in this routine, or any problems in its use.  Please
-c *** contact: Dr B.F. Phillips
-c ***          CSIRO, P.O. Box 20, North Beach, Western Australia 6020
-c ***          Australia.
-c ***
-c ***          Dr D.J. Webb
-c ***          National Oceanography Centre, Southampton SO14 3ZH,
-c ***          United Kingdom.
-c ***
-c *** Notes on the conversion of this program to other computer systems
-c ***
-c *** 1.  The program was originally written for a CDC Cyber 76 computer
-c ***     in Fortran IV.
-c *** 2.  The version of Fortran used is designed to comply with American
-c ***     National Standards institute (ANSI) Fortran language as
-c ***     described in X3.9-1966, but has been extended by CDC.
-c *** 3.  The programme listing contains details of non-ansi coding.
-c *** 4.  The word size of the Cyber is 60 bits with-
-c ***      (i)   Integers ranging from -2**59 - 1 to 2**59 - 1
-c ***      (ii)  Real numbers ranging from 10**(-293) to 10**(322) with
-c ***            precision of approximately 14 decimal digits.  For
-c ***            double precision the precision is approximately 29
-c ***            decimal digits.
-c ***      (iii) Each word is capable of holding 10 alphanumeric
-c ***            characters
-c *** 5.  Some subroutines are non-standard CDC library routines
-c ***     e.g. 'data' called by newpage returns an alphanumeric date
-c ***     in the format 10HBYY/MM/DDB, where B=Blank, YY=Year, MM=Month,
-c ***     DD=day.
-c ***     Also acos called by routines esunmoon and psunmo.
-c ***
-c ***
-c ***  Changes and corrections
-c ***
-c ***  A number of minor alterations have been made to this programme
-c ***  since its inception, in order to tidy up the code and to extend
-c ***  its versitility.  The method presented by Austin et al. (1976)
-c ***  has not been modified, however the original programme contained
-c ***  errors.  The following changes have been made to correct these
-c ***  and users should ensure that earlier versions of the programme
-c ***  are corrected in the same way:
-c ***
-c ***  1.  The follwing statements originally found in subroutine
-c ***      bright
-c ***        VE=EV2(IZ)+(Z-(IZ-1)*2.)*(EV2(IZ1)-EV2(IZ))/2.
-c ***        VE=EV3(IZ)+(Z-(IZ-1))*(EV3(IZ1)-EV3(IZ))
-c ***     have been replaced by
-c ***        VE=EV2(IZ)+(Z-50.-(IZ-1)*2.)*(EV2(IZ1)-EV2(IZ))/2.
-c ***        VE=EV3(IZ)+(Z-70.-(IZ-1))*(EV3(IZ1)-EV3(IZ))
-c ***     The error was found by Dr John T. Collins, Fisheries Research
-c ***     Station, Tehkummah, Ontario, Canada.  It exaggerated the effect
-c ***     of the angular distance of the moon above the horizon.
-c ***                                                         (17/8/78)
-c ***
-c ***  2.  The code has been modified to work with Fortran 90 running
-c ***      on a Linux workstation.
-c ***
-c ***  Version 2.1
-c ***
-c ***  3.  Dates outside the range 1900-2000 can be used.
-c ***
-c ***  4.  The name of the data file can be provided on the command line.
-c ***      For example:
-c ***      ./moonlight PhillipIsland.dat
-c ***
-c ***  Version 2.2
-c ***
-c ***  5.  File README gives further information on changes of accuracy
-c ***      with time.
-c ***
-c
+!
+!=======================================================================
+!23456789012345678901234567890123456789012345678901234567890123456789012
+! ***
+! *** Program to calculate the relative amount of illumination at each
+! *** hour on specified nights at a given location.
+! ***
+! ***  Version 2.4   (December 2020)
+! ***  For unix systems running Fortran 90.
+! ***
+! ***  Copyright 1976, 2018, 2020 R.H. Austin, B.F. Phillips, D.J. Webb
+! ***  Released under licence GPL-3.0-or-later
+! ***
+! ***  Reference:
+! ***   Austin, R.H., Phillips, B.F. and Webb, D.J. (1976)  A method
+! ***       for calculation moonlight illuminance at the Earth's
+! ***       surface.  J. Appl. Ecol., 13(3), 741-748.
+! ***
+! ***  Format for input file
+! ***
+! ***   Unless stated fields should be right justified and without
+! ***   a decimal point.  Dates and times should be zero filled
+! ***   (i.e. use zeros instead of blanks).
+! ***
+! ***   Column   Contents
+! ***   1-2      Latitude - degrees.
+! ***   4-5      Latitude - minutes.
+! ***   7        N or S for North or South latitude.
+! ***   11-13    Longitude - degrees.
+! ***   15-16    Longitude - minutes.
+! ***   18       E or W for East or West longitude
+! ***   21-29    Time correction.  The number of hours that the
+! ***            time is ahead of or behind greenwich mean time.
+! ***            Positive if ahead, negative if behind.  If no
+! ***            decimal point, decimal point assumed to lie to
+! ***            the right of column 29.  Otherwise punch left
+! ***            justified with decimal point.
+! ***   31-35    Number of days for which the user requires the
+! ***            calculation to be performed.
+! ***   37-44    Date (DDMMYYYY) of first day of period for which
+! ***            calculation is to be performed
+! ***   46-49    Time (HHMM) of day of the first instance for
+! ***            which the illumination is to be calculated.
+! ***   51-54    Time (HHMM) of day of the last instance for
+! ***            which the illumination is to be calculated.
+! ***            If the period between the first and second
+! ***            times includes midnight, add 2400 to the time
+! ***            (i.e. use 3000 for 6 am the following day).
+! ***   56-59    Time period (HHMM) between calculations.
+! ***            (Thus 0130 calculates every 1 hour and 30
+! ***            minutes).
+! ***
+! ***   An end-of-file or blank line ends the input data.
+! ***
+! ***  Example of the use of this program:
+! ***
+! ***    To obtain the relative amount of illuminance for 10 nights
+! ***    at each hour from 1800 hours to 0600 hours the following day
+! ***    from 26/09/77 to 05/10/77 at Perth, Western Australia
+! ***    (Latitude 31 degrees, 58 minutes south, longitude 115 degrees
+! ***    51 minutes east).  Local time is 8 hours ahead of Greenwich
+! ***    mean time.  The control cards are therefore:
+! *** Column 12345678901234567890123456789012345678901234567890123456789
+! ***        31 58 S   115 51 E  +8.0         10 26091977 1800 3000 0100
+! ***        Blank line
+! ***
+! *** The authors woul;d appreciate being informed of any errors
+! *** discovered in this routine, or any problems in its use.  Please
+! *** contact: Dr B.F. Phillips
+! ***          CSIRO, P.O. Box 20, North Beach, Western Australia 6020
+! ***          Australia.
+! ***
+! ***          Dr D.J. Webb
+! ***          National Oceanography Centre, Southampton SO14 3ZH,
+! ***          United Kingdom.
+! ***
+! *** Notes on the conversion of this program to other computer systems
+! ***
+! *** 1.  The program was originally written for a CDC Cyber 76 computer
+! ***     in Fortran IV.
+! *** 2.  The version of Fortran used is designed to comply with American
+! ***     National Standards institute (ANSI) Fortran language as
+! ***     described in X3.9-1966, but has been extended by CDC.
+! *** 3.  The programme listing contains details of non-ansi coding.
+! *** 4.  The word size of the Cyber is 60 bits with-
+! ***      (i)   Integers ranging from -2**59 - 1 to 2**59 - 1
+! ***      (ii)  Real numbers ranging from 10**(-293) to 10**(322) with
+! ***            precision of approximately 14 decimal digits.  For
+! ***            double precision the precision is approximately 29
+! ***            decimal digits.
+! ***      (iii) Each word is capable of holding 10 alphanumeric
+! ***            characters
+! *** 5.  Some subroutines are non-standard CDC library routines
+! ***     e.g. 'data' called by newpage returns an alphanumeric date
+! ***     in the format 10HBYY/MM/DDB, where B=Blank, YY=Year, MM=Month,
+! ***     DD=day.
+! ***     Also acos called by routines esunmoon and psunmo.
+! ***
+! ***
+! ***  Changes and corrections
+! ***
+! ***  A number of minor alterations have been made to this programme
+! ***  since its inception, in order to tidy up the code and to extend
+! ***  its versitility.  The method presented by Austin et al. (1976)
+! ***  has not been modified, however the original programme contained
+! ***  errors.  The following changes have been made to correct these
+! ***  and users should ensure that earlier versions of the programme
+! ***  are corrected in the same way:
+! ***
+! ***  1.  The follwing statements originally found in subroutine
+! ***      bright
+! ***        VE=EV2(IZ)+(Z-(IZ-1)*2.)*(EV2(IZ1)-EV2(IZ))/2.
+! ***        VE=EV3(IZ)+(Z-(IZ-1))*(EV3(IZ1)-EV3(IZ))
+! ***     have been replaced by
+! ***        VE=EV2(IZ)+(Z-50.-(IZ-1)*2.)*(EV2(IZ1)-EV2(IZ))/2.
+! ***        VE=EV3(IZ)+(Z-70.-(IZ-1))*(EV3(IZ1)-EV3(IZ))
+! ***     The error was found by Dr John T. Collins, Fisheries Research
+! ***     Station, Tehkummah, Ontario, Canada.  It exaggerated the effect
+! ***     of the angular distance of the moon above the horizon.
+! ***                                                         (17/8/78)
+! ***
+! ***  2.  The code has been modified to work with Fortran 90 running
+! ***      on a Linux workstation.
+! ***
+! ***  Version 2.1
+! ***
+! ***  3.  Dates outside the range 1900-2000 can be used.
+! ***
+! ***  4.  The name of the data file can be provided on the command line.
+! ***      For example:
+! ***      ./moonlight PhillipIsland.dat
+! ***
+! ***  Version 2.2
+! ***
+! ***  5.  File README gives further information on changes of accuracy
+! ***      with time.
+! ***
+!=======================================================================
+!
 
       character*1 latdrn,lngdrn,isnmn*2
       common latdeg,latmin,lngdeg,lngmin,timcor,lincnt,latdrn,lngdrn
@@ -140,7 +146,7 @@ c
       character*4 cj
       integer ::  narg
       character(len=256) :: input_string, input_file
-c
+!
       pi = 4d0*atan(1d0)
 !
 !  Look for input file on command line
@@ -153,21 +159,21 @@ c
          input_file = adjustl(input_string)
          print *," Using input file = ",trim(input_file)
        endif
-c
-c  choose a new date
-c
+!
+!  choose a new date
+!
       open(5,file=trim(input_file))
    5  read(5,60,end=300)latdeg,latmin,latdrn,lngdeg,lngmin,lngdrn,
      &              timcor,ndays,iday,imth,iyr,ihr,imn,jhr,jmn,khr,kmn
       if(ndays.eq.0)goto 300
   60  format(i2,1x,i2,1x,a1,3x,i3,1x,i2,1x,a1,2x,f9.0,1x,i5,1x,2i2,i4,
      &       1x,2i2,1x,2i2,1x,2i2)
-c
+!
       lincnt = 100
 !     iyr = 1900+iyr
-c
-c carry out checks
-c
+!
+! carry out checks
+!
       if(latdrn.ne.'N'.and.latdrn.ne.'n'.and.latdrn.ne.'S'
      &                .and.latdrn.ne.'s')goto 5
       if(lngdrn.ne.'E'.and.lngdrn.ne.'e'.and.lngdrn.ne.'W'
@@ -197,9 +203,9 @@ c
         jhr = ihr
         jmn = imn
       endif
-c
-c check start time and time difference
-c
+!
+! check start time and time difference
+!
       if(ihr.gt.23)then
         print *,' starting hour larger than 23 - check'
         goto 5
@@ -210,18 +216,18 @@ c
      &          'than 24 hours - check'
         goto 5
       endif
-c
-c  main loop over days
-c
+!
+!  main loop over days
+!
       do 200 kd = 1,ndays
-c  obtain date of next day
+!  obtain date of next day
       call addone(iday,imth,iyr,iiday,iimth,iiyr)
-c  set code to detect first printout for the period following midnight
+!  set code to detect first printout for the period following midnight
       lprcod = 1
-c
-c   starting from the first time instant, go through the day
-c   incrementing the time until the last time instant is exceeded
-c
+!
+!   starting from the first time instant, go through the day
+!   incrementing the time until the last time instant is exceeded
+!
       lhr = ihr
       lmn = imn
       goto 201
@@ -241,14 +247,14 @@ c
       goto 207
  206  hih=hih-24d0
       call esunmoon(as,am,el,rm,hih,iiday,iimth,iiyr,gmt,plat,long)
-c
+!
  207  llhr = lhr*100d0+lmn
       if(lhr.gt.24)llhr = (lhr-24)*100+lmn
       write(cj,"(i4)")llhr
-c
-c  test if the sun is above the horizon or less than 12 degrees
-c  below the horizon
-c
+!
+!  test if the sun is above the horizon or less than 12 degrees
+!  below the horizon
+!
       if(as.le.-12)goto 213
       if(am.lt.0.)goto 214
       isnmn = '*'
@@ -274,7 +280,7 @@ c
       goto 110
 
 
-c
+!
  215  if(lhr.eq.ihr.and.lmn.eq.imn)ell=el
       call bright(rm,el,ell,am,brt)
       brt = brt*100d0
@@ -311,17 +317,17 @@ c
       lprcod = 2
       print 115,iiday,iimth,iiyr,cj,as,am,el,rm,brt
  110  continue
-c
-c store the elongation for use at the next iteration
-c
+!
+! store the elongation for use at the next iteration
+!
       ell = el
-c
-c go back for next iteration
-c
+!
+! go back for next iteration
+!
       goto 202
-c
-c  no more iterations this day.  Print footnotes and go onto next day
-c
+!
+!  no more iterations this day.  Print footnotes and go onto next day
+!
  100  continue
       call newpag
       print 120
@@ -338,18 +344,20 @@ c
 
       subroutine bright(rm,el,ell,am,brt)
       implicit real*8(a-h,o-z)
-c
-c  routine to find brightness of moon
-c
-c  Input:
-c
-c  am - real*8 - angle in degrees of moon above horizon
-c  rm - real*8 - distance to moon in terms of 1/(mean equatorial
-c                parallax)
-c  el - real*8 - elongation in degrees
-c ell - real*8 - elongation at alst instant (used to determine if
-c                the moon is waxing or waining.
-c
+!
+!=======================================================================
+!  routine to find brightness of moon
+!
+!  Input:
+!
+!  am - real*8 - angle in degrees of moon above horizon
+!  rm - real*8 - distance to moon in terms of 1/(mean equatorial
+!                parallax)
+!  el - real*8 - elongation in degrees
+! ell - real*8 - elongation at alst instant (used to determine if
+!                the moon is waxing or waining.
+!=======================================================================
+!
       dimension en(11),ex(11),ev1(11),ev2(11),ev3(18)
       data pi/3.1415926532/
       data en/0d0,0.1d0,1d0,3.2d0,7.5d0,15d0,26d0,41d0,65d0,100d0,100d0/
@@ -361,21 +369,21 @@ c
       data ev3/0.45d0,0.48d0,0.52d0,0.56d0,0.60d0,0.65d0,0.71d0,
      &         0.77d0,0.83d0,0.91d0,0.99d0,1.08d0,1.19d0,1.33d0,
      &         1.52d0,1.77d0,2.12d0,2.61d0/
-c
-c      print *,' bright entered with - rm, el, ell, am, brt:'
-c      print 11, rm,el,ell,am
-c  11  format(4f12.6)
-c
+!
+!      print *,' bright entered with - rm, el, ell, am, brt:'
+!      print 11, rm,el,ell,am
+!  11  format(4f12.6)
+!
       radian = pi/180d0
       d=1/rm**2
       le = (el/20)+1.
       le1 = le+1
       if(el.lt.126..and.el.le.ell)goto 30
-c  waxing moon
+!  waxing moon
       ep = ex(le)+(el-(le-1)*20d0)*(ex(le1)-ex(le))/20d0
       goto 35
   30  continue
-c  waning moon
+!  waning moon
       ep = en(le)+(el-(le-1)*20d0)*(en(le1)-en(le))/20d0
   35  continue
       ep=ep/100d0
@@ -408,35 +416,35 @@ c  waning moon
       subroutine moonp(as,am,el,rm,hour,iday,month,iyear,plsgmt,
      &                 pole, rlon)
       implicit real*8(a-h,o-z)
-c
-c23456789012345678901234567890123456789012345678901234567890123456789012
-c***********************************************************************
-c
-c  subroutine to calculate angles of the moon and sun above the horizon
-c
-c  Input:
-c
-c    hour   -  real*8  - hours since midnight
-c    iday   -  integer - day of month (1=1st)
-c    month  -  integer - number of month (1=January)
-c    iyear  -  integer - year in range 1900 to 2000
-c    plsgmt -  real*8  - time zone relative to Greenwich
-c    pole   -  real*8  - polar angle of the place of interest in degrees
-c                        (equals 90 - latitude north of equator)
-c    rlon   -  real*8  - longitude of place of interest in degrees
-c
-c  Output:
-c
-c    as     -  real*8  - angle in degrees of sun above the horizon
-c    am     -  real*8  - angle in degrees of moon above the horizon
-c    el     -  real*8  - elongation in degrees
-c    rm     -  real*8  - distance of the moon in units of 1/(mean
-c                                   equatorial parallax)
-c
-c***********************************************************************
-c
+!
+!=======================================================================
+!23456789012345678901234567890123456789012345678901234567890123456789012
+!
+!  subroutine to calculate angles of the moon and sun above the horizon
+!
+!  Input:
+!
+!    hour   -  real*8  - hours since midnight
+!    iday   -  integer - day of month (1=1st)
+!    month  -  integer - number of month (1=January)
+!    iyear  -  integer - year in range 1900 to 2000
+!    plsgmt -  real*8  - time zone relative to Greenwich
+!    pole   -  real*8  - polar angle of the place of interest in degrees
+!                        (equals 90 - latitude north of equator)
+!    rlon   -  real*8  - longitude of place of interest in degrees
+!
+!  Output:
+!
+!    as     -  real*8  - angle in degrees of sun above the horizon
+!    am     -  real*8  - angle in degrees of moon above the horizon
+!    el     -  real*8  - elongation in degrees
+!    rm     -  real*8  - distance of the moon in units of 1/(mean
+!                                   equatorial parallax)
+!
+!=======================================================================
+!
       data pi/3.1415926532d0/
-c
+!
       radian = pi/180d0
       call skytime(hour,iday,month,iyear,plsgmt,hrgmt,centj)
       call psunmo(hrgmt,gra,ps,rlonsu,rs,pm,rlonmo,rm,t15)
@@ -455,45 +463,45 @@ c
 
       subroutine psunmo(hrgmt,gra,ps,rlonsu,rs,pm,rlonmo,rm,t15)
       implicit real*16(a-h,o-z)
-c
-c23456789012345678901234567890123456789012345678901234567890123456789012
-c***********************************************************************
-c
-c  subroutine to calculate position of the moon and sun using
-c  astronomical constants for epoch 1900
-c
-c  Input:
-c
-c    hrgmt  -  real*8  - hours since 0000 1st January 1900
-c
-c  Output:
-c
-c    gra    -  real*8  - right ascension of greenwich
-c    ps     -  real*8  - polar angle of the sun
-c    rlonsu -  real*8  - longitude of sun east of Greenwich
-c    rs     -  real*8  - relative distance of the sun
-c    pm     -  real*8  - polar angle of the moon
-c    rlonmo -  real*8  - longitude of moon east of Greenwich
-c    rm     -  real*8  - distance of the moon in units of 1/(mean
-c                                   equatorial parallax)
-c
-c  Note:  1.  all angles in radians
-c         2.  All internal calculations use real*16 for accuracy
-c
-c***********************************************************************
-c
+!
+!=======================================================================
+!23456789012345678901234567890123456789012345678901234567890123456789012
+!
+!  subroutine to calculate position of the moon and sun using
+!  astronomical constants for epoch 1900
+!
+!  Input:
+!
+!    hrgmt  -  real*8  - hours since 0000 1st January 1900
+!
+!  Output:
+!
+!    gra    -  real*8  - right ascension of greenwich
+!    ps     -  real*8  - polar angle of the sun
+!    rlonsu -  real*8  - longitude of sun east of Greenwich
+!    rs     -  real*8  - relative distance of the sun
+!    pm     -  real*8  - polar angle of the moon
+!    rlonmo -  real*8  - longitude of moon east of Greenwich
+!    rm     -  real*8  - distance of the moon in units of 1/(mean
+!                                   equatorial parallax)
+!
+!  Note:  1.  all angles in radians
+!         2.  All internal calculations use real*16 for accuracy
+!
+!=======================================================================
+!
       real*8  hrgmt,gra,ps,rlonsu,rs,pm,rlonmo,rm,t15
       real*16 c(19),ls,lm,nm,t
-c     data in/0/
+!     data in/0/
       save in
       in = 0
-c
+!
       if (in.eq.0)goto 200
-c
+!
  100  t = (hrgmt+12d0)/(36525d0*24d0)
-c
-c  calculate sun's position
-c
+!
+!  calculate sun's position
+!
       hs = mod((52d-7*t+628.3319509d0)*t+4.8816280d0,pi2)
       ps = mod((79d-7*t+0.0300053d0  )*t+4.9082295d0,pi2)
       es = (-126e-9*t-418e-7)*t+0.01675104
@@ -502,7 +510,7 @@ c
       ls = (2.5d0*es*cos1+2.)*es*sin1+hs
       rs = ((2d0*cos1**2-1d0)*es+cos1)*es+1d0
       ps = acos(sin(ls)*c(18))
-c
+!
       tval = (-0.5d0*pi+ls+ps)*0.5d0
       fis = 2d0*atan(c(1)*sin(tval)/cos(tval))
       t15 = mod(15d0*pi*hrgmt/180d0,pi2)
@@ -511,26 +519,26 @@ c
       if(t15.lt.0d0)t15 = t15+pi2
       if(gra.lt.0d0)gra = gra+pi2
       if(rlonsu.lt.0d0)rlonsu=rlonsu+pi2
-c
-c      print 11,hrgmt,t
-c      print 12,hs*degree,ps*degree,es*degree
-c      print 12,cos1,sin1,c(18)
-c      print 12,es*degree,cos1,sin1,hs*degree
-c      print 12,ls*degree,ps*degree
-c      print 12,tval,fis,t15*degree
-c      print 12,gra*degree,rlonsu*degree
-c      print 12,90d0-ps*degree,rlonsu*degree
-c  11  format(3f12.4)
-c  12  format(4f12.6)
+!
+!      print 11,hrgmt,t
+!      print 12,hs*degree,ps*degree,es*degree
+!      print 12,cos1,sin1,c(18)
+!      print 12,es*degree,cos1,sin1,hs*degree
+!      print 12,ls*degree,ps*degree
+!      print 12,tval,fis,t15*degree
+!      print 12,gra*degree,rlonsu*degree
+!      print 12,90d0-ps*degree,rlonsu*degree
+!  11  format(3f12.4)
+!  12  format(4f12.6)
       in=in+1
       if(in.ge.3)stop
-c
-c calculate moon's position
-c
+!
+! calculate moon's position
+!
       hm = mod((346d-7*t+8399.7092745d0)*t+4.7200089d0,pi2)
       pm = mod((-1801d-7*t+71.0180412d0)*t+5.8351526d0,pi2)
       nm = mod((363d-7*t-33.7571463d0)*t+4.5236016d0,pi2)
-c
+!
       tval = 0.5*nm
       q1= sin(tval)/cos(tval)
       p = atan(c(2)*q1)
@@ -558,7 +566,7 @@ c
       rm = 1d0 + c(11)*(c(12)*cos2 +c(13)*cos4 +c(14)*cos6 +c(15)*cos5
      &                 +c(16)*cos7 +c(17)*cos8*es)
       pm = acos(sin(lm)*sin(wm))
-c
+!
       tval = (0.5d0*pi+wm)*0.5d0
       y = sin(tval)/cos(tval)
       tval = (-0.5d0*pi+lm+pm)*0.5d0
@@ -567,9 +575,9 @@ c
       rlonmo = mod(v+fim-gra,pi2)
       if(rlonmo.lt.0d0)rlonmo=rlonmo+pi2
       return
-c
-c set up constants
-c
+!
+! set up constants
+!
  200  in=1
       c1 = 1d0
       c2 = 2d0
@@ -606,41 +614,43 @@ c
       c(18) = sin(ws)
       c(19) = -3d0*ratm
       goto 100
-c
+!
       end
 
       subroutine skytime(hour,iday,month,iyear,plsgmt,hrgmt,centj)
       implicit real*8(a-h,o-z)
-c
-c23456789012345678901234567890123456789012345678901234567890123456789012
-c
-c  subroutine to calculate hrgmt the number of hours since 0000 on
-c  1 Jan 1900 and the number of Julian centuries since 1200 on
-c  31 Decemebr 1899.
-c
-c  Input:
-c
-c    hour   -  real*8  - hours since midnight
-c    iday   -  integer - day of month (1=1st)
-c    month  -  integer - number of month (1=January)
-c    iyear  -  integer - year in range 1900 to 2000
-c    plsgmt -  real*8  - time zone relative to Greenwich
-c
-c  Output
-c
-c    hrgmt  -  real*8 - hours since 0000 on 1st Jan 1900
-c    centj  -  real*8 - Julian centuries since 1200 31st Dec 1899
-c
+!
+!=======================================================================
+!23456789012345678901234567890123456789012345678901234567890123456789012
+!
+!  subroutine to calculate hrgmt the number of hours since 0000 on
+!  1 Jan 1900 and the number of Julian centuries since 1200 on
+!  31 Decemebr 1899.
+!
+!  Input:
+!
+!    hour   -  real*8  - hours since midnight
+!    iday   -  integer - day of month (1=1st)
+!    month  -  integer - number of month (1=January)
+!    iyear  -  integer - year in range 1900 to 2000
+!    plsgmt -  real*8  - time zone relative to Greenwich
+!
+!  Output
+!
+!    hrgmt  -  real*8 - hours since 0000 on 1st Jan 1900
+!    centj  -  real*8 - Julian centuries since 1200 31st Dec 1899
+!=======================================================================
+!
       dimension mday(12)
       data  mday /0,31,59,90,120,151,181,212,243,273,304,334/
-c
+!
       if(iyear.lt.1900.or.iyear.ge.2100)then
         print *,' Program moonlight should only be used for'
         print *,' the period 1900 to 2100.'
         print *,' Programme stopping ...'
         stop
       endif
-c
+!
       nyear = iyear-1900
 !      nleap = nyear/4
 !      if(4*nleap.eq.nyear.and.month.le.2.and.nyear.ne.0)nleap=nleap-1
@@ -664,20 +674,20 @@ c
 
       subroutine newpag
       implicit real*8(a-h,o-z)
-c
+!
       character*1 latdrn,lngdrn,latsvc,lngsvc,ins*5,iew*4
       character*8 date
       data icode/1/
       save icode,  maxlin, lpage,  date
       save latsva, latsvb, lngsva, lngsvb, timsv, latsvc, lngsvc
       common latdeg,latmin,lngdeg,lngmin,timcor,lincnt,latdrn,lngdrn
-c
+!
       if(icode.gt.1)goto 2
 
    1  icode=2
       maxlin=40
       lpage=0
-c     call date(date)
+!     call date(date)
       date ='DD/MM/YY'
 
    3  lincnt = maxlin+1
@@ -708,7 +718,7 @@ c     call date(date)
      & ' and Webb, D.J. (1976) A method for calculating',/,21x,
      & "moonlight illuminance at the Earth's surface. J. Appl.",
      & ' Ecol., 13(3), 741-748.',/)
-c
+!
       ins=latdrn
       if(ins.eq.'N')ins='North'
       if(ins.eq.'S')ins='South'
@@ -757,12 +767,14 @@ c
 
       subroutine addone(id,im,iy,jd,jm,jy)
       implicit real*8(a-h,o-z)
-c
-c  returns the date jd/jm/jy of the day following id/im/iy
-c
+!
+!=======================================================================
+!  returns the date jd/jm/jy of the day following id/im/iy
+!=======================================================================
+!
       dimension km(12)
       data km/31,28,31,30,31,30,31,31,30,31,30,31/
-c
+!
       jd = id+1
       jm = im
       jy = iy
@@ -772,7 +784,7 @@ c
         print *,' stopping...'
         stop
       endif
-c
+!
       kd=km(im)
       if(im.ne.2)goto 3
       if((iy/4)*4.eq.iy)kd=kd+1
@@ -784,7 +796,7 @@ c
         print *,' stopping...'
         stop
       endif
-c
+!
       if(id.ne.kd)return
       jd = 1
       jm = im+1
@@ -797,9 +809,11 @@ c
       subroutine leapyear(iyear, ileap)
       implicit none
 !
+!=======================================================================
 !  Subroutine to flag leap years.
 !  If iyear is a leap year: ileap = 1
 !                     else: ileap = 0
+!=======================================================================
 !
       integer, intent(in)  :: iyear
       integer, intent(out) :: ileap
@@ -819,8 +833,10 @@ c
       subroutine leapyears(iyear, nleap)
       implicit none
 !
+!=======================================================================
 !  Subroutine returns nleap the number of leapyears prior to
 !  year iyear since year 1.
+!=======================================================================
 !
       integer, intent(in)  :: iyear
       integer, intent(out) :: nleap
